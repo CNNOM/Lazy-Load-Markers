@@ -9,7 +9,6 @@
 <h1>Карта с динамическими точками</h1>
 <div id="map"></div>
 
-<script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
 <script>
     ymaps.ready(init);
     
