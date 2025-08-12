@@ -7,7 +7,7 @@ use Bitrix\Main\SystemException;
 
 class Points
 {
-    private const MAP_POINTS_HL_ID = 6; 
+    private const MAP_POINTS_HL_ID = 1; 
     private $entityDataClass;
 
     public function __construct()
