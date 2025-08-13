@@ -12,6 +12,10 @@ $maxLng = (float) $_POST['maxLng'];
 
 $pointsService = new \Dterra\App\Services\Points();
 $result = $pointsService->getPointsInBounds($minLat, $maxLat, $minLng, $maxLng);
-
+// $APPLICATION->RestartBuffer();
+// echo '<pre>';
+// print_r($result);
+// echo '</pre>';
+// exit();
 header('Content-Type: application/json');
 echo json_encode($result);

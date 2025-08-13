@@ -5,19 +5,20 @@ IncludeTemplateLangFile(__FILE__);
 ?>
 
 <head>
-    <title><?= $APPLICATION->ShowTitle() ?></title>
-    <? $APPLICATION->ShowHead();
-    require $_SERVER['DOCUMENT_ROOT'] . SITE_TEMPLATE_PATH . '/include/templates/assets.php';
-    CModule::IncludeModule('iblock');
-    ?>
+  <title><?= $APPLICATION->ShowTitle() ?></title>
+  <? $APPLICATION->ShowHead();
+  require $_SERVER['DOCUMENT_ROOT'] . SITE_TEMPLATE_PATH . '/include/templates/assets.php';
+  CModule::IncludeModule('iblock');
+  ?>
 </head>
 
 <header class="header">
-  <?$APPLICATION->ShowPanel();?>
+  <? $APPLICATION->ShowPanel(); ?>
   <div class="inner"><a class="header__logo" href="/">
       <svg class="svg-icon svg-icon--icon_logo2">
-        <use xlink:href="img/sprite.svg#icon_logo2"></use>
-      </svg></a>
+        <!-- <use xlink:href="img/sprite.svg#icon_logo2"></use> -->
+      </svg>
+    </a>
     <div class="header__content">
       <div class="header__wrap">
         <div class="header__headings"><a class="header__heading header__heading--active"

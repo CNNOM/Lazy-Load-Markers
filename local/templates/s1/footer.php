@@ -47,10 +47,13 @@
         <div class="ui-p4">Список лиц, под контролем либо значительным влиянием которых находится банк
         </div>
         <div class="footer__social">
-          <div class="footer__dis"><img src="img/dis.png" alt=""></div><a class="social-link footer__social-link"
+          <div class="footer__dis">
+            <!-- <img src="img/dis.png" alt=""> -->
+          </div>
+          <a class="social-link footer__social-link"
             href="#">
             <svg class="svg-icon svg-icon--icon_tg">
-              <use xlink:href="img/sprite.svg#icon_tg"></use>
+              <!-- <use xlink:href="img/sprite.svg#icon_tg"></use> -->
             </svg></a>
         </div>
       </div>
