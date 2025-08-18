@@ -17,6 +17,14 @@ $hlblockId = 1; // ID Highload-блока
 $numberOfPoints = 25; // Количество случайных точек
 $yandexApiKey = 'ваш_api_ключ'; // Ключ Яндекс.Карт
 
+// Границы Москвы (примерные координаты)
+$moscowBounds = [
+    'min_lat' => 55.573,
+    'max_lat' => 55.911,
+    'min_lon' => 37.370,
+    'max_lon' => 37.857
+];
+
 try {
     // Получаем сущность HL-блока
     $hlblock = HL\HighloadBlockTable::getById($hlblockId)->fetch();
@@ -29,14 +37,14 @@ try {
     
     $totalAdded = 0;
     
-    // Генерация 25 случайных точек
+    // Генерация случайных точек в пределах Москвы
     for ($i = 0; $i < $numberOfPoints; $i++) {
-        // Шаг 1: Генерация случайных координат в пределах Земли
-        $latitude = mt_rand(-900000, 900000) / 10000; // -90 до 90 с 4 знаками
-        $longitude = mt_rand(-1800000, 1800000) / 10000; // -180 до 180 с 4 знаками
+        // Генерация случайных координат в пределах Москвы
+        $latitude = mt_rand($moscowBounds['min_lat'] * 10000, $moscowBounds['max_lat'] * 10000) / 10000;
+        $longitude = mt_rand($moscowBounds['min_lon'] * 10000, $moscowBounds['max_lon'] * 10000) / 10000;
         
-        // Шаг 2: Получение названия через обратное геокодирование (опционально)
-        $name = "Точка $i"; // Значение по умолчанию
+        // Получение названия через обратное геокодирование
+        $name = "Точка Москвы $i"; // Значение по умолчанию
         $reverseGeocodeUrl = "https://geocode-maps.yandex.ru/1.x/?format=json&apikey=$yandexApiKey&geocode=$longitude,$latitude";
         $response = @file_get_contents($reverseGeocodeUrl);
         
@@ -45,9 +53,15 @@ try {
             if (!empty($data['response']['GeoObjectCollection']['featureMember'][0]['GeoObject']['name'])) {
                 $name = $data['response']['GeoObjectCollection']['featureMember'][0]['GeoObject']['name'];
             }
+            
+            // Проверяем, что точка действительно в Москве
+            if (strpos($response, 'Москва') === false && strpos($response, 'Moscow') === false) {
+                echo "Точка ($latitude, $longitude) вне Москвы, пропускаем<br>";
+                continue;
+            }
         }
         
-        // Шаг 3: Добавление записи в HL-блок
+        // Добавление записи в HL-блок
         $result = $entityClass::add([
             'UF_NAME' => $name,
             'UF_LATITUDE' => $latitude,
@@ -62,7 +76,7 @@ try {
         }
     }
     
-    echo "Готово! Добавлено $totalAdded записей";
+    echo "Готово! Добавлено $totalAdded записей в пределах Москвы";
     
 } catch (Exception $e) {
     echo "Ошибка: " . $e->getMessage();

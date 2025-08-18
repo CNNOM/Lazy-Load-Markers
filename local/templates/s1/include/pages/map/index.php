@@ -4,7 +4,7 @@
 <?
 $APPLICATION->IncludeComponent(
     'dterra:points',
-    '',
+    'points',
     []
 );
 ?>
