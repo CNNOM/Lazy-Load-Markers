@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
   ymaps.ready(init);
 
   function init() {
@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     // Добавляем обработчик клика по метке
-    objectManager.objects.events.add('click', function(e) {
+    objectManager.objects.events.add('click', function (e) {
       const objectId = e.get('objectId');
       const object = objectManager.objects.getById(objectId);
       console.log('Clicked on:', object.properties.get('balloonContent'));
@@ -44,17 +44,13 @@ document.addEventListener("DOMContentLoaded", function() {
     map.geoObjects.add(objectManager);
 
     // Логирование изменения области видимости
-    map.events.add('boundschange', function() {
+    map.events.add('boundschange', function () {
       const bounds = map.getBounds();
-      try {
-        const distance = ymaps.coordSystem.geo.getDistance(
-          [bounds[0][0], bounds[0][1]],
-          [bounds[1][0], bounds[1][1]]
-        );
-        console.log(`Область: ${(distance/1000).toFixed(2)}км, Масштаб: ${map.getZoom()}`);
-      } catch(e) {
-        console.log("Ошибка: " + e.message);
-      }
+      const distance = ymaps.coordSystem.geo.getDistance(
+        [bounds[0][0], bounds[0][1]],
+        [bounds[1][0], bounds[1][1]]
+      );
+
     });
   }
 });
