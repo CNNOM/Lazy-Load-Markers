@@ -12,12 +12,9 @@ if (!$USER->IsAdmin()) {
 
 Loader::includeModule('highloadblock');
 
-// Конфигурация
-$hlblockId = 1; // ID Highload-блока
-$numberOfPoints = 25; // Количество случайных точек
-$yandexApiKey = 'ваш_api_ключ'; // Ключ Яндекс.Карт
+$hlblockId = 1; 
+$numberOfPoints = 25; 
 
-// Границы Москвы (примерные координаты)
 $moscowBounds = [
     'min_lat' => 55.573,
     'max_lat' => 55.911,
@@ -26,7 +23,6 @@ $moscowBounds = [
 ];
 
 try {
-    // Получаем сущность HL-блока
     $hlblock = HL\HighloadBlockTable::getById($hlblockId)->fetch();
     if (!$hlblock) {
         throw new Exception("Highload-блок с ID $hlblockId не найден");
@@ -37,14 +33,11 @@ try {
     
     $totalAdded = 0;
     
-    // Генерация случайных точек в пределах Москвы
     for ($i = 0; $i < $numberOfPoints; $i++) {
-        // Генерация случайных координат в пределах Москвы
         $latitude = mt_rand($moscowBounds['min_lat'] * 10000, $moscowBounds['max_lat'] * 10000) / 10000;
         $longitude = mt_rand($moscowBounds['min_lon'] * 10000, $moscowBounds['max_lon'] * 10000) / 10000;
         
-        // Получение названия через обратное геокодирование
-        $name = "Точка Москвы $i"; // Значение по умолчанию
+        $name = "Точка Москвы $i";
         $reverseGeocodeUrl = "https://geocode-maps.yandex.ru/1.x/?format=json&apikey=$yandexApiKey&geocode=$longitude,$latitude";
         $response = @file_get_contents($reverseGeocodeUrl);
         
@@ -54,14 +47,12 @@ try {
                 $name = $data['response']['GeoObjectCollection']['featureMember'][0]['GeoObject']['name'];
             }
             
-            // Проверяем, что точка действительно в Москве
             if (strpos($response, 'Москва') === false && strpos($response, 'Moscow') === false) {
                 echo "Точка ($latitude, $longitude) вне Москвы, пропускаем<br>";
                 continue;
             }
         }
         
-        // Добавление записи в HL-блок
         $result = $entityClass::add([
             'UF_NAME' => $name,
             'UF_LATITUDE' => $latitude,

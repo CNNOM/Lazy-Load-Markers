@@ -36,11 +36,8 @@ foreach ($points as $point) {
         ],
         'properties' => [
             'balloonContent' => $point['NAME'],
-            'hintContent' => $point['DESCRIPTION'] ?? ''
         ],
-        'options' => [
-            'preset' => 'islands#redDotIcon'
-        ]
+
     ];
 }
 

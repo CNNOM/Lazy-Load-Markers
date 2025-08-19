@@ -22,7 +22,7 @@ const MapPoint = {
     },
 
     objects: {
-      preset: 'islands#redDotIcon',
+      preset: 'islands#nightDotIcon',
     }
   },
 
@@ -36,7 +36,8 @@ const MapPoint = {
 
     this.setupBoundsChangeHandler(); // изменение границ
 
-    this.addObjectManagerToMap();
+    this.addObjectManagerToMap(); // добавление objectManager на карту
+
   },
 
   createMap() {
@@ -78,7 +79,6 @@ const MapPoint = {
   },
 };
 
-// Инициализация при загрузке DOM
 document.addEventListener("DOMContentLoaded", function () {
   MapPoint.init();
 });
