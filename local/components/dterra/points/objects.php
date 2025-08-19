@@ -36,8 +36,8 @@ foreach ($points as $point) {
         ],
         'properties' => [
             'balloonContent' => $point['NAME'],
+            'clusterCaption' => $point['NAME'], 
         ],
-
     ];
 }
 

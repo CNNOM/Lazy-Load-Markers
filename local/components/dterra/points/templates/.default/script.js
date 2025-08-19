@@ -33,11 +33,10 @@ const MapPoint = {
   initMap() {
     this.createMap(); // создание  карты
     this.createObjectManager(); // настройка карты
-
+    
     this.setupBoundsChangeHandler(); // изменение границ
 
     this.addObjectManagerToMap(); // добавление objectManager на карту
-
   },
 
   createMap() {
